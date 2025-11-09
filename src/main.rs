@@ -1,3 +1,4 @@
+#![windows_subsystem = "windows"]
 use eframe::egui::{
     self, CentralPanel, Color32, ComboBox, Context, CursorIcon, RichText, TextStyle, Ui,
     ViewportBuilder, Window,
@@ -163,7 +164,7 @@ impl Tablr {
                         .striped(true)
                         .resizable(true)
                         .columns(Column::auto().resizable(true), self.column_names.len() + 1)
-                        .header(20.0, |mut header_row| {
+                        .header(25.0, |mut header_row| {
                             self.render_table_header(&mut header_row, &self.column_names.clone());
                         })
                         .body(|body| {
