@@ -9,3 +9,7 @@ eframe = { version = "0.33.0", features = ["default"] }
 egui_extras = "0.33.0"
 polars = { version = "0.51.0", features = ["lazy", "parquet", "dtype-full", "strings", "regex"] }
 rfd = "0.15.4"
+
+[package.metadata.packager]
+before-packaging-command = "cargo build --release"
+product-name = "Tablr"

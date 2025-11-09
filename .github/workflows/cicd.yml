@@ -24,10 +24,17 @@ jobs:
 
       - run: cargo build --profile ${{ matrix.BUILD_TARGET }}
 
+      - run: cargo packager --release
+
       - uses: actions/upload-artifact@v4
         with:
           name: Tablr.exe
           path: target/${{ matrix.BUILD_TARGET }}/tablr.exe
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Tablr-Installer.exe
+          path: target/${{ matrix.BUILD_TARGET }}//tablr_*_x64-setup.exe
 
   release:
     needs: build
