@@ -2,13 +2,10 @@
 name = "tablr"
 version = "0.1.0"
 edition = "2024"
-description = "A simple parquet file viewer"
+description = "Desktop GUI Parquet Viewer"
 
 [dependencies]
-eframe = { version = "0.31.1", features = ["default"] }
-egui_extras = "0.31.1"
-polars = { version = "0.48.1", features = ["lazy", "parquet", "dtype-full", "regex", "strings"] }
-rfd = "0.15.3"
-
-[package.metadata.bundle]
-identifier = "li.zimo.tablr"
+eframe = { version = "0.33.0", features = ["default"] }
+egui_extras = "0.33.0"
+polars = { version = "0.51.0", features = ["lazy", "parquet", "dtype-full", "strings", "regex"] }
+rfd = "0.15.4"

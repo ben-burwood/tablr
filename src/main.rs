@@ -67,7 +67,11 @@ impl Tablr {
         self.original_dataframe = None;
         self.column_names.clear();
 
-        let scan_sources = ScanSources::Paths(paths.into());
+        let pl_paths: Vec<PlPath> = paths
+            .into_iter()
+            .map(|pb| PlPath::Local(Arc::from(pb.into_boxed_path())))
+            .collect();
+        let scan_sources = ScanSources::Paths(Arc::from(pl_paths.into_boxed_slice()));
 
         match LazyFrame::scan_parquet_sources(scan_sources, ScanArgsParquet::default())
             .and_then(|lazy_frame| lazy_frame.collect())
