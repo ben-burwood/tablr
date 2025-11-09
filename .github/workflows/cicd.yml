@@ -48,6 +48,10 @@ jobs:
         with:
           name: Tablr.exe
 
+      - uses: actions/download-artifact@v4
+        with:
+          name: Tablr-Installer.exe
+
       - name: Set Release Tag
         id: set_tag
         run: |
@@ -61,4 +65,4 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release upload ${{ steps.set_tag.outputs.tag }} Tablr.exe/Tablr.exe --clobber
+          gh release upload ${{ steps.set_tag.outputs.tag }} Tablr.exe Tablr-Installer.exe --clobber
