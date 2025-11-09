@@ -13,3 +13,6 @@ rfd = "0.15.4"
 [package.metadata.packager]
 before-packaging-command = "cargo build --release"
 product-name = "Tablr"
+[[file-associations]]
+extensions = ["parquet"]
+description = "Parquet File Viewer"
