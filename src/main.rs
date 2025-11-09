@@ -387,8 +387,20 @@ impl eframe::App for Tablr {
 fn main() -> Result<(), eframe::Error> {
     let paths: Vec<PathBuf> = env::args().skip(1).map(PathBuf::from).collect();
 
+    let icon = include_bytes!("../assets/tablr.png");
+    let image = image::load_from_memory(icon)
+        .expect("Failed to open icon path")
+        .to_rgba8();
+    let (icon_width, icon_height) = image.dimensions();
+
     let options = eframe::NativeOptions {
-        viewport: ViewportBuilder::default().with_inner_size([1200.0, 800.0]),
+        viewport: ViewportBuilder::default()
+            .with_inner_size([1200.0, 800.0])
+            .with_icon(egui::IconData {
+                rgba: image.into_raw(),
+                width: icon_width,
+                height: icon_height,
+            }),
         ..Default::default()
     };
     eframe::run_native(

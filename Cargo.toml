@@ -7,12 +7,14 @@ description = "Desktop GUI Parquet Viewer"
 [dependencies]
 eframe = { version = "0.33.0", features = ["default"] }
 egui_extras = "0.33.0"
+image = "0.25.8"
 polars = { version = "0.51.0", features = ["lazy", "parquet", "dtype-full", "strings", "regex"] }
 rfd = "0.15.4"
 
 [package.metadata.packager]
 before-packaging-command = "cargo build --release"
 product-name = "Tablr"
+icons = ["assets/tablr.png"]
 [[file-associations]]
 extensions = ["parquet"]
 description = "Parquet File Viewer"
