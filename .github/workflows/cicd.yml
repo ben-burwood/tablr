@@ -1,0 +1,57 @@
+name: Built and Release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      release:
+        description: "Release Tag"
+        required: true
+
+jobs:
+  build:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        BUILD_TARGET: [release]
+
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - run: cargo build --profile ${{ matrix.BUILD_TARGET }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Tablr.exe
+          path: target/${{ matrix.BUILD_TARGET }}/tablr.exe
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: Tablr.exe
+
+      - name: Set Release Tag
+        id: set_tag
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+          echo "tag=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          else
+          echo "tag=${{ github.event.inputs.tag_name }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Update GitHub Release with Artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload ${{ steps.set_tag.outputs.tag }} Tablr.exe/Tablr.exe --clobber
